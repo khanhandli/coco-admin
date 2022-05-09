@@ -2,6 +2,7 @@ import { Button, Card, Col, Form, Row } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postDataAPI } from '../../../apis/fetchData';
+import RichEditor from '../../../components/editor';
 import FormComponent from '../../../components/global/Form';
 import FormItem from '../../../components/global/Form/FormItem';
 import UploadFile from '../../../components/global/Form/uploadFile';
@@ -15,10 +16,10 @@ const initialState = {
 const CreateProduct = () => {
     const navigate = useNavigate();
     const [value, setValue] = React.useState(initialState);
-    console.log('🚀 ~ file: create.jsx ~ line 18 ~ CreateProduct ~ value', value);
+    const [desc, setDesc] = React.useState('');
+    const [detail, setDetail] = React.useState('');
 
     const onSubmit = async (values) => {
-        console.log(value.image);
         if (!value.title || !value.image) return getNotifications('Vui lòng nhập đủ thông tin ảnh hoặc tên', 'error');
 
         if (typeof value.image === 'string') {
@@ -26,7 +27,13 @@ const CreateProduct = () => {
             const photo = await imageUpload(value.image);
             if (photo) {
                 try {
-                    const res = await postDataAPI('product', { ...value, ...values, image: photo.url });
+                    const res = await postDataAPI('product', {
+                        ...value,
+                        ...values,
+                        image: photo.url,
+                        description: desc,
+                        detail: detail,
+                    });
                     if (res.status === 200) {
                         getNotifications(res.data.msg, 'success');
                         navigate(-1);
@@ -60,7 +67,7 @@ const CreateProduct = () => {
                         </Form.Item>,
                     ]}
                 >
-                    <Row className="m-4">
+                    <Row className="m-4" gutter={[20, 0]}>
                         <Col span={16}>
                             <Row>
                                 <Col span={12}>
@@ -83,16 +90,8 @@ const CreateProduct = () => {
                                         name="category"
                                         placeholder="Chọn danh mục cha"
                                         type="select"
-                                        apiUrl="all_category"
+                                        apiUrl="all_category?all=true"
                                         isSelectNoParent
-                                    />
-                                </Col>
-                                <Col span={12}>
-                                    <FormItem
-                                        label="Mô tả"
-                                        name="description"
-                                        placeholder="Nhập mô tả"
-                                        type="text_teara"
                                     />
                                 </Col>
                                 <Col span={12}>
@@ -137,6 +136,15 @@ const CreateProduct = () => {
                                         />
                                     </div>
                                 </Col>
+                                <Col span={12}>
+                                    <FormItem
+                                        initialValue={0}
+                                        label="Giảm giá(%)"
+                                        name="discount"
+                                        placeholder="Nhập số lượng"
+                                        type="input_number"
+                                    />
+                                </Col>
                             </Row>
                         </Col>
                         <Col span={8}>
@@ -161,7 +169,12 @@ const CreateProduct = () => {
                                         />
                                         <div className="ml-3">
                                             <h2 className="font-bold text-lg break-all">{value.title}</h2>
-                                            <div className="mt-1 text-md break-all">{value.description}</div>
+                                            <div
+                                                className="mt-1 text-md break-all custom_desc"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: value.description,
+                                                }}
+                                            />
                                             <span>
                                                 {value.price && (
                                                     <>
@@ -176,6 +189,12 @@ const CreateProduct = () => {
                                     </div>
                                 )}
                             </Card>
+                        </Col>
+                        <Col span={12}>
+                            <RichEditor body={desc} setBody={setDesc} />
+                        </Col>
+                        <Col span={12}>
+                            <RichEditor body={detail} setBody={setDetail} />
                         </Col>
                     </Row>
                 </HeaderLayout>

@@ -98,3 +98,9 @@ body::-webkit-scrollbar-thumb
 											  #e7b78a 51%,
 											  #f29c6d 100%);
 }
+
+.custom_desc * {
+  font-size: 14px !important;
+  line-height: 20px !important;
+  color: rgba(0, 0, 0, 0.45) !important;
+}

@@ -57,7 +57,16 @@ const Product = () => {
                                     <List.Item.Meta
                                         avatar={<Avatar size={70} src={item.image} />}
                                         title={<div className="text-[15px] font-bold">{item.title}</div>}
-                                        description={<div className="text-sm">{item.description}</div>}
+                                        description={
+                                            <div
+                                                className="custom_desc w-[96%] text-sm"
+                                                dangerouslySetInnerHTML={{
+                                                    __html:
+                                                        item.description &&
+                                                        item.description.replace(/margin-bottom/g, ''),
+                                                }}
+                                            />
+                                        }
                                     />
                                     <div>
                                         <span className="font-bold">{formatNumber(item.price)}</span> Đồng

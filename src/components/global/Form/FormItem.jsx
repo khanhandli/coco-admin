@@ -15,7 +15,6 @@ const FormItem = ({
     data,
 }) => {
     const [dataSelect, setDataSelect] = React.useState([]);
-    console.log('🚀 ~ file: FormItem.jsx ~ line 7 ~ FormItem ~ dataSelect', dataSelect);
     const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {

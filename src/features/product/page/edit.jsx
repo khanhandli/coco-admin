@@ -2,6 +2,7 @@ import { Button, Card, Col, Form, Row } from 'antd';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getDataAPI, postDataAPI, putDataAPI } from '../../../apis/fetchData';
+import RichEditor from '../../../components/editor';
 import FormComponent from '../../../components/global/Form';
 import FormItem from '../../../components/global/Form/FormItem';
 import UploadFile from '../../../components/global/Form/uploadFile';
@@ -16,18 +17,39 @@ const EditProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [value, setValue] = React.useState(initialState);
-    console.log('🚀 ~ file: edit.jsx ~ line 19 ~ EditProduct ~ value', value);
+    const [desc, setDesc] = React.useState('');
+    const [detail, setDetail] = React.useState('');
 
     const onSubmit = async (values) => {
-        console.log(value.image);
         if (!value.title || !value.image) return getNotifications('Vui lòng nhập đủ thông tin ảnh hoặc tên', 'error');
 
         if (typeof value.image === 'string') {
+            try {
+                const res = await putDataAPI('product/' + id, {
+                    ...value,
+                    ...values,
+                    image: value.image,
+                    description: desc,
+                    detail,
+                });
+                if (res.status === 200) {
+                    getNotifications(res.data.msg, 'success');
+                    navigate(-1);
+                }
+            } catch (error) {
+                console.log('🚀 ~ file: create.jsx ~ line 13 ~ onSubmit ~ error', error);
+            }
         } else {
             const photo = await imageUpload(value.image);
             if (photo) {
                 try {
-                    const res = await putDataAPI('product/' + id, { ...value, ...values, image: photo.url });
+                    const res = await putDataAPI('product/' + id, {
+                        ...value,
+                        ...values,
+                        image: photo.url,
+                        description: desc,
+                        detail,
+                    });
                     if (res.status === 200) {
                         getNotifications(res.data.msg, 'success');
                         navigate(-1);
@@ -43,8 +65,8 @@ const EditProduct = () => {
         const getData = async () => {
             try {
                 const res = await getDataAPI('product/' + id);
-                console.log('🚀 ~ file: edit.jsx ~ line 45 ~ getData ~ res', res);
                 if (res.status === 200) {
+                    setDesc(res.data.description);
                     setValue(res.data);
                 }
             } catch (error) {
@@ -80,7 +102,7 @@ const EditProduct = () => {
                             </Button>,
                         ]}
                     >
-                        <Row className="m-4">
+                        <Row className="m-4" gutter={[20, 0]}>
                             <Col span={16}>
                                 <Row>
                                     <Col span={12}>
@@ -109,15 +131,7 @@ const EditProduct = () => {
                                             selectedValue={value.category}
                                         />
                                     </Col>
-                                    <Col span={12}>
-                                        <FormItem
-                                            label="Mô tả"
-                                            name="description"
-                                            placeholder="Nhập mô tả"
-                                            type="text_teara"
-                                            initialValue={value.description}
-                                        />
-                                    </Col>
+
                                     <Col span={12}>
                                         <FormItem
                                             initialValue={value.price}
@@ -168,6 +182,15 @@ const EditProduct = () => {
                                             />
                                         </div>
                                     </Col>
+                                    <Col span={12}>
+                                        <FormItem
+                                            initialValue={value?.discount}
+                                            label="Giảm giá(%)"
+                                            name="discount"
+                                            placeholder="Nhập số lượng"
+                                            type="input_number"
+                                        />
+                                    </Col>
                                 </Row>
                             </Col>
                             <Col span={8}>
@@ -194,7 +217,12 @@ const EditProduct = () => {
                                             />
                                             <div className="ml-3">
                                                 <h2 className="font-bold text-lg break-all">{value.title}</h2>
-                                                <div className="mt-1 text-md break-all">{value.description}</div>
+                                                <div
+                                                    className="mt-1 text-md break-all custom_desc"
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: value.description,
+                                                    }}
+                                                />
                                                 <span>
                                                     {value.price && (
                                                         <>
@@ -209,6 +237,12 @@ const EditProduct = () => {
                                         </div>
                                     )}
                                 </Card>
+                            </Col>
+                            <Col span={12}>
+                                <RichEditor body={desc} setBody={setDesc} />
+                            </Col>
+                            <Col span={12}>
+                                <RichEditor body={detail} setBody={setDetail} />
                             </Col>
                         </Row>
                     </HeaderLayout>

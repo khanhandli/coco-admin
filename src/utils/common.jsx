@@ -26,3 +26,15 @@ export const imageUpload = async (file) => {
 export const formatNumber = (number) => {
     return number?.toString()?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 };
+
+export const checkImage = (file) => {
+    const types = ['image/png', 'image/jpeg'];
+    let err = '';
+    if (!file) return (err = 'Tập tin không tồn tại.');
+
+    if (file.size > 1024 * 1024) err = 'Kích cỡ vượt quá 1mb.';
+
+    if (!types.includes(file.type)) err = 'Ảnh không đúng định dạnh png / jpg.';
+
+    return err;
+};
