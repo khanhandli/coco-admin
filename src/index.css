@@ -36,7 +36,9 @@ code {
   border: 0px;
   border-radius: 2px;
 }
-
+.ant-avatar > img {
+  border-radius: 999px !important;
+}
 
 
 .site-collapse-custom-panel .ant-collapse-header {
@@ -75,20 +77,28 @@ thead.ant-table-thead {
   border-top-right-radius: 15px;
 }
 
-body::-webkit-scrollbar-track
+.hidden_scroll::-webkit-scrollbar
+{
+	width: 0;
+}
+
+body::-webkit-scrollbar-track,
+.custom_scroll::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
 	background-color: #F5F5F5;
 	border-radius: 10px;
 }
 
-body::-webkit-scrollbar
+body::-webkit-scrollbar,
+.custom_scroll::-webkit-scrollbar
 {
-	width: 10px;
+	width: 6px;
 	background-color: #F5F5F5;
 }
 
-body::-webkit-scrollbar-thumb
+body::-webkit-scrollbar-thumb,
+.custom_scroll::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
 	background-color: #FFF;
@@ -103,4 +113,15 @@ body::-webkit-scrollbar-thumb
   font-size: 14px !important;
   line-height: 20px !important;
   color: rgba(0, 0, 0, 0.45) !important;
+}
+
+button.ant-pagination-item-link {
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center;
+}
+
+.ant-pagination-item {
+  border-radius: 10px !important;
 }

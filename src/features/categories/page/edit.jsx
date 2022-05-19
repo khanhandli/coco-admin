@@ -49,7 +49,7 @@ const EditCategory = () => {
                     onSubmit={onSubmit}
                 >
                     <HeaderLayout
-                        title="Thêm danh mục"
+                        title="Sửa danh mục"
                         subtitle="* là các trường bắt buộc nhập"
                         button={[
                             <Form.Item className="flex items-center mb-0 mr-4">

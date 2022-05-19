@@ -5,6 +5,9 @@ import Categories from '../features/categories/page';
 import CreateCategory from '../features/categories/page/create';
 import EditCategory from '../features/categories/page/edit';
 import HomePage from '../features/home/page';
+import PostPage from '../features/post/page';
+import CreatePost from '../features/post/page/create';
+import EditPost from '../features/post/page/edit';
 import Product from '../features/product/page';
 import CreateProduct from '../features/product/page/create';
 import EditProduct from '../features/product/page/edit';
@@ -15,7 +18,7 @@ import EditExplore from '../features/promotion/page/edit_explore';
 const RouterList = () => {
     return (
         <Routes>
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<HomePage />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/promotion">
                 <Route index element={<Promotion />} />
@@ -32,6 +35,11 @@ const RouterList = () => {
                 <Route index element={<Product />} />
                 <Route path="/product/create" element={<CreateProduct />} />
                 <Route path="/product/edit/:id" element={<EditProduct />} />
+            </Route>
+            <Route path="/post">
+                <Route index element={<PostPage />} />
+                <Route path="/post/create" element={<CreatePost />} />
+                <Route path="/post/edit/:id" element={<EditPost />} />
             </Route>
         </Routes>
     );

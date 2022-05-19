@@ -1,22 +1,22 @@
 import { Avatar, Button, List, Skeleton } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { deleteDataAPI, getDataAPI } from '../../../apis/fetchData';
 import AppLayout from '../../../components/layouts/AppLayout';
 import HeaderLayout from '../../../components/layouts/HeaderLayout';
-import { formatNumber, getNotifications } from '../../../utils/common';
-
-const Product = () => {
-    const [product, setProduct] = React.useState([]);
+import { Link } from 'react-router-dom';
+import { getNotifications } from '../../../utils/common';
+import { getDataAPI, deleteDataAPI } from '../../../apis/fetchData';
+const PostPage = () => {
     const [loading, setLoading] = React.useState(false);
+    const [posts, setPosts] = React.useState([]);
     const [callback, setCallback] = React.useState(false);
 
     React.useEffect(() => {
         (async () => {
             setLoading(true);
-            const res = await getDataAPI('product');
+
+            const res = await getDataAPI('post');
             if (res.status === 200) {
-                setProduct(res.data);
+                setPosts(res.data);
                 setLoading(false);
             }
         })();
@@ -25,21 +25,21 @@ const Product = () => {
     return (
         <AppLayout>
             <HeaderLayout
-                noBack
-                title="Danh sách sản phẩm"
-                subtitle=""
                 button={[
                     <Button type="primary" className="rounded-lg bg-blue-500" key="3">
-                        <Link to="/product/create">Thêm sản phẩm</Link>
+                        <Link to="/post/create">Tạo bài đăng</Link>
                     </Button>,
                 ]}
+                noBack
+                title="Danh sách bài đăng"
+                subtitle=""
             >
-                {product && product.length > 0 && (
+                {posts && posts.length > 0 && (
                     <List
                         className="demo-loadmore-list"
                         loading={loading}
                         itemLayout="horizontal"
-                        dataSource={product}
+                        dataSource={posts}
                         pagination={{
                             showSizeChanger: false,
 
@@ -48,12 +48,12 @@ const Product = () => {
                         renderItem={(item) => (
                             <List.Item
                                 actions={[
-                                    <Link to={`/product/edit/${item._id}`} key="list-loadmore-edit">
+                                    <Link to={`/post/edit/${item._id}`} key="list-loadmore-edit">
                                         Sửa
                                     </Link>,
                                     <div
                                         onClick={async () => {
-                                            const res = await deleteDataAPI('product/' + item._id);
+                                            const res = await deleteDataAPI('post/' + item._id);
                                             if (res.status === 200) {
                                                 getNotifications(res.data.msg, 'success');
                                                 setCallback(!callback);
@@ -74,16 +74,11 @@ const Product = () => {
                                             <div
                                                 className="custom_desc w-[96%] text-sm"
                                                 dangerouslySetInnerHTML={{
-                                                    __html:
-                                                        item.description &&
-                                                        item.description.replace(/margin-bottom/g, ''),
+                                                    __html: item?.content.slice(0, 1500),
                                                 }}
                                             />
                                         }
                                     />
-                                    <div>
-                                        <span className="font-bold">{formatNumber(item.price)}</span> Đồng
-                                    </div>
                                 </Skeleton>
                             </List.Item>
                         )}
@@ -94,4 +89,4 @@ const Product = () => {
     );
 };
 
-export default Product;
+export default PostPage;

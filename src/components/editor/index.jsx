@@ -1,32 +1,7 @@
 import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { notification } from 'antd';
-import 'tinymce/tinymce';
-import 'tinymce/icons/default';
-import 'tinymce/plugins/advlist';
-import 'tinymce/plugins/anchor';
-import 'tinymce/plugins/autolink';
-import 'tinymce/plugins/charmap';
-import 'tinymce/plugins/code';
-import 'tinymce/plugins/fullscreen';
-import 'tinymce/plugins/help';
-import 'tinymce/plugins/hr';
-import 'tinymce/plugins/image';
-import 'tinymce/plugins/insertdatetime';
-import 'tinymce/plugins/link';
-import 'tinymce/plugins/lists';
-import 'tinymce/plugins/media';
-import 'tinymce/plugins/nonbreaking';
-import 'tinymce/plugins/paste';
-import 'tinymce/plugins/searchreplace';
-import 'tinymce/plugins/spellchecker';
-import 'tinymce/plugins/table';
-import 'tinymce/plugins/template';
-import 'tinymce/plugins/wordcount';
-import 'tinymce/skins/content/default/content.min.css';
-import 'tinymce/skins/ui/oxide/content.min.css';
-import 'tinymce/skins/ui/oxide/skin.min.css';
-import 'tinymce/themes/silver';
+
 import { checkImage, imageUpload } from '../../utils/common';
 
 const RichEditor = ({ body, setBody }) => {
@@ -44,26 +19,14 @@ const RichEditor = ({ body, setBody }) => {
                     menubar: true,
                     statubar: true,
                     plugins: [
-                        'advlist autolink link image lists charmap print preview anchor pagebreak',
-                        'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-                        'save table contextmenu directionality emoticons template codesample fullscreen',
+                        'advlist autolink link image lists charmap print preview anchor',
+                        'searchreplace wordcount code fullscreen insertdatetime media nonbreaking',
+                        'save table template fullscreen',
                     ],
                     toolbar:
                         'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons | codesample fullscreen',
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                     paste_data_images: true,
-                    codesample_languages: [
-                        { text: 'HTML/XML', value: 'markup' },
-                        { text: 'JavaScript', value: 'javascript' },
-                        { text: 'ReactJS', value: 'jsx' },
-                        { text: 'Typescript', value: 'typescript' },
-                        { text: 'CSS', value: 'css' },
-                        { text: 'Python', value: 'python' },
-                        { text: 'Java', value: 'java' },
-                        { text: 'C', value: 'c' },
-                        { text: 'C#', value: 'csharp' },
-                        { text: 'C++', value: 'cpp' },
-                    ],
                     file_browser_callback_types: 'image',
                     file_picker_callback: async function (callback, value, meta) {
                         if (meta?.filetype === 'image') {

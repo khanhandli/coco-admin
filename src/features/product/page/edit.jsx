@@ -68,6 +68,7 @@ const EditProduct = () => {
                 if (res.status === 200) {
                     setDesc(res.data.description);
                     setValue(res.data);
+                    setDetail(res.data.detail);
                 }
             } catch (error) {
                 console.log('🚀 ~ file: create.jsx ~ line 13 ~ onSubmit ~ error', error);
@@ -89,7 +90,7 @@ const EditProduct = () => {
             {value.title && (
                 <FormComponent onValuesChange={onValuesChange} onSubmit={onSubmit}>
                     <HeaderLayout
-                        title="Thêm danh mục"
+                        title="Sửa sản phẩm"
                         subtitle="* là các trường bắt buộc nhập"
                         button={[
                             <Form.Item className="flex items-center mb-0">
@@ -171,7 +172,7 @@ const EditProduct = () => {
                                             name="quantity"
                                             placeholder="Nhập số lượng"
                                             type="input_number"
-                                            initialValue={value.quantity}
+                                            initialValue={value.quantity_cart}
                                         />
                                     </Col>
                                     <Col span={12}>

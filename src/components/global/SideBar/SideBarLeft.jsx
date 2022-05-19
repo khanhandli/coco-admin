@@ -10,7 +10,9 @@ import {
 } from '@ant-design/icons';
 import { Divider, Collapse } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-
+import { getDataAPI } from '../../../apis/fetchData';
+import moment from 'moment';
+import { useStore } from '../../../hooks/useStore';
 const { Panel } = Collapse;
 
 const text = `
@@ -21,9 +23,11 @@ const text = `
 
 const SideBarLeft = () => {
     const { pathname } = useLocation();
+    const newPost = useStore().newPost;
+    const newUser = useStore().newUser;
 
     return (
-        <div className="w-[270px] 2xl:w-[290px] shadow-lg p-[35px] border-r-2 border-solid border-r-[#E2E2E2] sidebar_left">
+        <div className="max-h-screen overflow-y-auto custom_scroll w-[270px] 2xl:w-[290px] shadow-lg p-[35px] border-r-2 border-solid border-r-[#E2E2E2] sidebar_left">
             <div className="flex items-center mb-[50px] 2xl:mb-[80px]">
                 <img src={logo} alt="logo" />
                 <div className="ml-[11px]">
@@ -82,15 +86,15 @@ const SideBarLeft = () => {
                         </span>
                     </div>
                 </Link>
-                <div className="flex items-center mb-[40px]">
+                {/* <div className="flex items-center mb-[40px]">
                     <CalendarOutlined style={{ fontSize: '18px', color: 'black', opacity: 0.4 }} />
                     <span className="text-[15px] font-[500] ml-[16px] text-black opacity-40">Activity</span>
-                </div>
+                </div> */}
                 <div className="flex items-center mb-[40px]">
                     <SettingOutlined style={{ fontSize: '18px', color: 'black', opacity: 0.4 }} />
                     <span className="text-[15px] font-[500] ml-[16px] text-black opacity-40">Setting</span>
                 </div>
-                <Divider className="mt-[30px] 2xl:mt-[60px]" />
+                <Divider className="mt-[20px] 2xl:mt-[20px]" />
                 <Collapse
                     bordered={false}
                     ghost
@@ -102,10 +106,31 @@ const SideBarLeft = () => {
                     className="site-collapse-custom-collapse"
                 >
                     <Panel header="Bài đăng" key="1" className="site-collapse-custom-panel">
-                        <p>{text}</p>
+                        {newPost &&
+                            newPost.length > 0 &&
+                            newPost.map((item, index) => {
+                                if (index < 3)
+                                    return (
+                                        <div key={index} className="flex items-center mt-[14px]">
+                                            <img
+                                                className="h-[32px] w-[32px] object-cover rounded-full"
+                                                src={item.image}
+                                                alt={item.title}
+                                            />
+                                            <div className="flex flex-col">
+                                                <span className="ml-2 truncate text-[15px] font-[500] text-black">
+                                                    <Link to={`/post/edit/${item._id}`}>{item.title}</Link>
+                                                </span>
+                                                <span className="ml-2 truncate text-[12px] text-[#ccc]">
+                                                    {moment(item.createdAt).format('hh:mm DD/MM/YYYY')}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                            })}
                     </Panel>
                 </Collapse>
-                <Divider className="mt-[30px] 2xl:mt-[60px]" />
+                <Divider className="mt-[10px] 2xl:mt-[20px]" />
                 <Collapse
                     bordered={false}
                     ghost
@@ -117,7 +142,28 @@ const SideBarLeft = () => {
                     className="site-collapse-custom-collapse"
                 >
                     <Panel header="Người dùng mới" key="1" className="site-collapse-custom-panel">
-                        <p>{text}</p>
+                        {newUser &&
+                            newUser.length > 0 &&
+                            newUser.map((item, index) => {
+                                if (index < 3)
+                                    return (
+                                        <div key={index} className="flex items-center mt-[14px]">
+                                            <img
+                                                className="h-[32px] w-[32px] object-cover rounded-full"
+                                                src={item.avatar}
+                                                alt={item.name}
+                                            />
+                                            <div className="flex flex-col">
+                                                <span className="ml-2 truncate text-[15px] font-[500] text-black">
+                                                    <Link to={`/edit/user/${item.id}`}>{item.name}</Link>
+                                                </span>
+                                                <span className="ml-2 truncate text-[12px] text-[#ccc]">
+                                                    {moment(item.createdAt).format('hh:mm DD/MM/YYYY')}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                            })}
                     </Panel>
                 </Collapse>
             </div>
