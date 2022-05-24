@@ -16,7 +16,6 @@ const Banner = ({ detailBanner, getCallback, idBanner }) => {
     const [visible, setVisible] = React.useState(false);
     const [confirmLoading, setConfirmLoading] = React.useState(false);
     const [value, setValue] = React.useState(initialState);
-    console.log('🚀 ~ file: index.jsx ~ line 19 ~ Banner ~ value', value);
     const [isOpen, setIsOpen] = React.useState(false);
 
     const showModal = (item, module) => {
@@ -47,9 +46,9 @@ const Banner = ({ detailBanner, getCallback, idBanner }) => {
                 getCallback();
                 setVisible(false);
                 setConfirmLoading(false);
+                setValue(initialState);
             }
         } else {
-            console.log('vao day');
             const photo = await imageUpload(value.image);
             if (photo) {
                 const res = await patchDataAPI('home_banner/' + idBanner, {
@@ -68,6 +67,7 @@ const Banner = ({ detailBanner, getCallback, idBanner }) => {
                     getCallback();
                     setVisible(false);
                     setConfirmLoading(false);
+                    setValue(initialState);
                 }
             }
         }
@@ -145,76 +145,6 @@ const Banner = ({ detailBanner, getCallback, idBanner }) => {
                             setIsOpen(true);
                         }}
                         className="relative bg_img col-span-2 row-[span_22_/_span_22] xl:row-[span_24_/_span_24] bg-[red] rounded-[32px]"
-                    >
-                        <Button
-                            className="bg-orange-600 absolute bottom-2 px-6 font-bold right-8 rounded-full outline-none border-0"
-                            type="primary"
-                        >
-                            Sửa
-                        </Button>
-                    </div>
-                </div>
-                <div className="flex-1 grid grid-flow-col gap-2 xl:gap-4">
-                    <div
-                        style={{
-                            background: `url("${detailBanner.banner_5.image}") no-repeat center center`,
-                        }}
-                        onClick={() => {
-                            showModal(detailBanner.banner_5, 'banner_5');
-                            setIsOpen(true);
-                        }}
-                        className="relative bg_img rounded-[32px] col-span-2 row-[span_22_/_span_22] xl:row-[span_24_/_span_22] bg-[red]"
-                    >
-                        <Button
-                            className="bg-orange-600 absolute bottom-2 px-6 font-bold right-8 rounded-full outline-none border-0"
-                            type="primary"
-                        >
-                            Sửa
-                        </Button>
-                    </div>
-                    <div
-                        style={{
-                            background: `url("${detailBanner.banner_6.image}") no-repeat center center`,
-                        }}
-                        onClick={() => {
-                            showModal(detailBanner.banner_6, 'banner_6');
-                            setIsOpen(true);
-                        }}
-                        className="relative bg_img rounded-[32px] col-span-2 row-[span_22_/_span_22] xl:row-[span_24_/_span_22] bg-[red]"
-                    >
-                        <Button
-                            className="bg-orange-600 absolute bottom-2 px-6 font-bold right-8 rounded-full outline-none border-0"
-                            type="primary"
-                        >
-                            Sửa
-                        </Button>
-                    </div>
-                    <div
-                        style={{
-                            background: `url("${detailBanner.banner_7.image}") round`,
-                        }}
-                        onClick={() => {
-                            showModal(detailBanner.banner_7, 'banner_7');
-                            setIsOpen(true);
-                        }}
-                        className="relative bg_img rounded-[32px] row-[span_11_/_span_11] xl:row-[span_12_/_span_12] col-span-5 bg-[red]"
-                    >
-                        <Button
-                            className="bg-orange-600 absolute bottom-2 px-6 font-bold right-8 rounded-full outline-none border-0"
-                            type="primary"
-                        >
-                            Sửa
-                        </Button>
-                    </div>
-                    <div
-                        style={{
-                            background: `url("${detailBanner.banner_8.image}") round`,
-                        }}
-                        onClick={() => {
-                            showModal(detailBanner.banner_8, 'banner_8');
-                            setIsOpen(true);
-                        }}
-                        className="relative bg_img rounded-[32px] row-[span_11_/_span_11] xl:row-[span_12_/_span_12] col-span-5 bg-[red]"
                     >
                         <Button
                             className="bg-orange-600 absolute bottom-2 px-6 font-bold right-8 rounded-full outline-none border-0"

@@ -44,6 +44,7 @@ const HomePage = () => {
 
     const newUser = useStore().newUser;
     const [products, setProducts] = useStore().products;
+    console.log('🚀 ~ file: index.jsx ~ line 47 ~ HomePage ~ products', products);
 
     React.useEffect(() => {
         (async () => {
@@ -184,6 +185,7 @@ const HomePage = () => {
                                 <PieQuarter reportPayment={reportPayment} />
                             </Col>
                             <Col span={12}>
+                                <div className="text-[18px] font-bold mt-2">Thống kê doanh thu theo sản phẩm</div>
                                 <PieColumn products={products} />
                             </Col>
                         </Row>

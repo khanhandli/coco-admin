@@ -114,6 +114,9 @@ const TableOrder = ({
                 if (value == 'money') {
                     return <span>Tiền mặt</span>;
                 }
+                if (value == 'paypal') {
+                    return <span>Paypal</span>;
+                }
             },
         },
         {

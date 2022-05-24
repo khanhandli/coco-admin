@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Pie, measureTextWidth } from '@ant-design/plots';
 
 const PieChart = ({ products }) => {
+    console.log('🚀 ~ file: PieChart.jsx ~ line 6 ~ PieChart ~ products', products);
     function renderStatistic(containerWidth, text, style) {
         const { width: textWidth, height: textHeight } = measureTextWidth(text, style);
         const R = containerWidth / 2; // r^2 = (w / 2)^2 + (h - offsetY)^2
@@ -24,7 +25,7 @@ const PieChart = ({ products }) => {
 
     const config = {
         appendPadding: 40,
-        data: products ? products : [],
+        data: products ? products.filter((product) => product.sold) : [],
         angleField: 'sold',
         colorField: 'title',
         radius: 1,

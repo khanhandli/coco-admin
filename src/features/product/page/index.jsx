@@ -37,13 +37,13 @@ const Product = () => {
                 {product && product.length > 0 && (
                     <List
                         className="demo-loadmore-list"
-                        loading={loading}
+                        loading={loading || !product.length}
                         itemLayout="horizontal"
                         dataSource={product}
                         pagination={{
                             showSizeChanger: false,
 
-                            total: 10,
+                            pageSize: 5,
                         }}
                         renderItem={(item) => (
                             <List.Item

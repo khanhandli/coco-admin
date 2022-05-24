@@ -4,6 +4,10 @@ import blog from '../../../assets/images/blog.png';
 import sale from '../../../assets/images/sale.png';
 import { Link, useLocation } from 'react-router-dom';
 import { useStore } from '../../../hooks/useStore';
+import { TimeDay } from '../../../utils/common';
+import { Badge, Drawer } from 'antd';
+import { getDataAPI } from '../../../apis/fetchData';
+import moment from 'moment';
 
 const stylesNumberInfo = 'text-[16px] text-[#11243D] font-bold text-center';
 const titleInfo = 'text-[12px] text-[#707A89]';
@@ -14,20 +18,44 @@ const SideBarRight = () => {
     const newUser = useStore().newUser;
     const newPost = useStore().newPost;
     const [products, setProducts] = useStore().products;
+    const [visibleNoti, setVisibleNoti] = React.useState(false);
+    const [listNoti, setListNoti] = React.useState([]);
+    const [page, setPage] = React.useState(1);
 
+    const showDrawer = () => {
+        setVisibleNoti(true);
+    };
+
+    React.useEffect(() => {
+        (async () => {
+            const res = await getDataAPI('notification?limit=' + page * 4);
+            if (res.status === 200) {
+                setListNoti(res.data);
+            }
+        })();
+    }, [page]);
     return (
         <div className="max-h-screen overflow-y-auto custom_scroll w-[350px] 2xl:w-[380px] shadow-lg p-[16px]">
             <div className="flex justify-between items-center mb-[50px] 2xl:mb-[80px] p-[10px]">
                 <div>
                     <div className="text-[17px] text-[#11243D] font-bold mb-[5px]">Hi Admin</div>
-                    <div className="text-[13px] text-[#707A89]">Good Morning!</div>
+                    <div className="text-[13px] text-[#707A89]">{TimeDay()}</div>
                 </div>
                 <div className="flex">
                     <div className="cursor-pointer hover:bg-[#f3f3f3] h-[48px] mr-[10px] w-[48px] flex items-center justify-center sidebar_right_icon">
                         <MessageOutlined style={{ fontSize: '20px' }} />
                     </div>
-                    <div className="cursor-pointer hover:bg-[#f3f3f3] h-[48px] mr-[10px] w-[48px] flex items-center justify-center sidebar_right_icon">
-                        <BellOutlined style={{ fontSize: '20px' }} />
+
+                    <div
+                        onClick={showDrawer}
+                        className="cursor-pointer hover:bg-[#f3f3f3] h-[48px] mr-[10px] w-[48px] flex items-center justify-center sidebar_right_icon"
+                    >
+                        <Badge
+                            count={listNoti?.data && listNoti?.data.length > 0 ? listNoti?.data?.length : 0}
+                            overflowCount={10}
+                        >
+                            <BellOutlined style={{ fontSize: '20px' }} />
+                        </Badge>
                     </div>
                     <div
                         onClick={() => {
@@ -105,6 +133,50 @@ const SideBarRight = () => {
                     </Link>
                 </div>
             </div>
+            <Drawer
+                title="Thông báo"
+                drawerStyle={{ background: '#f1f1f1' }}
+                onClose={() => setVisibleNoti(!visibleNoti)}
+                placement="right"
+                visible={visibleNoti}
+                className="list_noti"
+            >
+                <div>
+                    {listNoti?.data &&
+                        listNoti?.data?.length > 0 &&
+                        listNoti?.data.map((item, index) => {
+                            return (
+                                <div key={index} className="w-full p-3 mt-2 bg-white rounded-2xl shadow-lg flex">
+                                    <div className="w-[4.6rem] h-8 border rounded-full border-gray-200 flex items-center justify-center">
+                                        <img className="h-[16px] w-[16px]" src={item.img} alt="avt" />
+                                    </div>
+                                    <div className="pl-3">
+                                        <p
+                                            className="text-sm mb-1 leading-5"
+                                            dangerouslySetInnerHTML={{ __html: item.title }}
+                                        />
+
+                                        <p className="text-xs leading-3 pt-1 text-gray-500">
+                                            {moment(item.createdAt).fromNow()}
+                                        </p>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    {listNoti?.total >= 4 && page * 4 < listNoti?.total && (
+                        <div className="flex justify-center mt-4">
+                            <button
+                                onClick={() => setPage(page + 1)}
+                                class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-full group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300"
+                            >
+                                <span class="relative px-5 py-2 transition-all ease-in duration-75 bg-white rounded-full group-hover:bg-opacity-0">
+                                    Xem thêm
+                                </span>
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </Drawer>
         </div>
     );
 };

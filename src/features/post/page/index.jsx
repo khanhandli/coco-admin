@@ -43,7 +43,7 @@ const PostPage = () => {
                         pagination={{
                             showSizeChanger: false,
 
-                            total: 10,
+                            pageSize: 1,
                         }}
                         renderItem={(item) => (
                             <List.Item

@@ -172,7 +172,7 @@ const EditProduct = () => {
                                             name="quantity"
                                             placeholder="Nhập số lượng"
                                             type="input_number"
-                                            initialValue={value.quantity_cart}
+                                            initialValue={value.quantity}
                                         />
                                     </Col>
                                     <Col span={12}>
@@ -240,9 +240,13 @@ const EditProduct = () => {
                                 </Card>
                             </Col>
                             <Col span={12}>
+                                <h2>Mô tả</h2>
+
                                 <RichEditor body={desc} setBody={setDesc} />
                             </Col>
                             <Col span={12}>
+                                <h2>Chi tiết</h2>
+
                                 <RichEditor body={detail} setBody={setDetail} />
                             </Col>
                         </Row>

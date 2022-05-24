@@ -57,7 +57,7 @@ const CreateProduct = () => {
         <AppLayout>
             <FormComponent onValuesChange={onValuesChange} onSubmit={onSubmit}>
                 <HeaderLayout
-                    title="Thêm danh mục"
+                    title="Thêm sản phẩm"
                     subtitle="* là các trường bắt buộc nhập"
                     button={[
                         <Form.Item className="flex items-center mb-0">
@@ -191,9 +191,12 @@ const CreateProduct = () => {
                             </Card>
                         </Col>
                         <Col span={12}>
+                            <h2>Mô tả</h2>
                             <RichEditor body={desc} setBody={setDesc} />
                         </Col>
                         <Col span={12}>
+                            <h2>Chi tiết</h2>
+
                             <RichEditor body={detail} setBody={setDetail} />
                         </Col>
                     </Row>

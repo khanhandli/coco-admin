@@ -38,3 +38,16 @@ export const checkImage = (file) => {
 
     return err;
 };
+
+export const TimeDay = () => {
+    const today = new Date();
+    const curHr = today.getHours();
+
+    if (curHr < 12) {
+        return 'Chào buổi sáng!';
+    } else if (curHr < 18) {
+        return 'Chào buổi chiều!';
+    } else {
+        return 'Chào buổi tối';
+    }
+};
