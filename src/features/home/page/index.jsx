@@ -1,18 +1,17 @@
+import { Avatar, Col, Row, Tooltip } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import { postDataAPI } from '../../../apis/fetchData';
 import AppLayout from '../../../components/layouts/AppLayout';
-import Statistics from '../components/Statistics';
-import moment from 'moment';
-import ChartColumn from '../components/ChartColumn';
-import TableOrder from '../components/TableOrder';
-import { Avatar, Col, Row, Space, Tooltip } from 'antd';
-import { UserOutlined, AntDesignOutlined } from '@ant-design/icons';
 import { useStore } from '../../../hooks/useStore';
+import ChartColumn from '../components/ChartColumn';
 import ListButtonOrder from '../components/ListButtonOrder';
 import PieChart from '../components/PieChart';
 import PieChartBold from '../components/PieChartBold';
-import PieQuarter from '../components/PieQuarter';
 import PieColumn from '../components/PieColumn';
+import PieQuarter from '../components/PieQuarter';
+import Statistics from '../components/Statistics';
+import TableOrder from '../components/TableOrder';
 
 const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 const colorActive =
@@ -44,7 +43,6 @@ const HomePage = () => {
 
     const newUser = useStore().newUser;
     const [products, setProducts] = useStore().products;
-    console.log('🚀 ~ file: index.jsx ~ line 47 ~ HomePage ~ products', products);
 
     React.useEffect(() => {
         (async () => {
@@ -84,9 +82,9 @@ const HomePage = () => {
                                             src={item.avatar}
                                         />
                                         {user?._id == item?._id && (
-                                            <span class="flex h-3 w-3 absolute bottom-0 right-4">
-                                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                                                <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-600"></span>
+                                            <span className="flex h-3 w-3 absolute bottom-0 right-4">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-600"></span>
                                             </span>
                                         )}
                                     </div>

@@ -1,8 +1,8 @@
-import { Popconfirm, Table, Input, Button, Space } from 'antd';
-import React from 'react';
-import { formatNumber } from '../../../utils/common';
 import { DeleteOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, Input, Popconfirm, Space, Table } from 'antd';
+import React from 'react';
 import { deleteDataAPI } from '../../../apis/fetchData';
+import { formatNumber } from '../../../utils/common';
 const TableOrder = ({
     selectedRowKeys,
     reportPayment,

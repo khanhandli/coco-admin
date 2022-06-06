@@ -90,10 +90,10 @@ const SideBarLeft = () => {
                     <CalendarOutlined style={{ fontSize: '18px', color: 'black', opacity: 0.4 }} />
                     <span className="text-[15px] font-[500] ml-[16px] text-black opacity-40">Activity</span>
                 </div> */}
-                <div className="flex items-center mb-[40px]">
+                {/* <div className="flex items-center mb-[40px]">
                     <SettingOutlined style={{ fontSize: '18px', color: 'black', opacity: 0.4 }} />
                     <span className="text-[15px] font-[500] ml-[16px] text-black opacity-40">Setting</span>
-                </div>
+                </div> */}
                 <Divider className="mt-[20px] 2xl:mt-[20px]" />
                 <Collapse
                     bordered={false}
