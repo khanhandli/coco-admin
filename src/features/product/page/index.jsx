@@ -1,4 +1,4 @@
-import { Avatar, Button, List, Skeleton } from 'antd';
+import { Avatar, Button, Input, List, Skeleton } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { deleteDataAPI, getDataAPI } from '../../../apis/fetchData';
@@ -8,6 +8,8 @@ import { formatNumber, getNotifications } from '../../../utils/common';
 
 const Product = () => {
     const [product, setProduct] = React.useState([]);
+    const [productSearch, setProductSearch] = React.useState([]);
+    console.log('🚀 ~ file: index.jsx ~ line 12 ~ Product ~ productSearch', productSearch);
     const [loading, setLoading] = React.useState(false);
     const [callback, setCallback] = React.useState(false);
 
@@ -29,6 +31,22 @@ const Product = () => {
                 title="Danh sách sản phẩm"
                 subtitle=""
                 button={[
+                    <Input.TextArea
+                        autoSize
+                        onChange={(e) => {
+                            if (!e.target.value) {
+                                setProductSearch([]);
+                            } else {
+                                setProductSearch(
+                                    product.filter((item) =>
+                                        item.title.toLowerCase().includes(e.target.value.toLowerCase())
+                                    )
+                                );
+                            }
+                        }}
+                        placeholder="Nhập để tìm kiếm"
+                        className="w-[400px] rounded-md"
+                    />,
                     <Button type="primary" className="rounded-lg bg-blue-500" key="3">
                         <Link to="/product/create">Thêm sản phẩm</Link>
                     </Button>,
@@ -37,9 +55,13 @@ const Product = () => {
                 {product && product.length > 0 && (
                     <List
                         className="demo-loadmore-list"
-                        loading={loading || !product.length}
+                        loading={
+                            loading || (productSearch && productSearch.length > 0)
+                                ? !productSearch.length
+                                : !product.length
+                        }
                         itemLayout="horizontal"
-                        dataSource={product}
+                        dataSource={productSearch && productSearch.length > 0 ? productSearch : product}
                         pagination={{
                             showSizeChanger: false,
 

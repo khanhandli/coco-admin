@@ -1,17 +1,14 @@
-import React from 'react';
-import logo from '../../../assets/images/logo.png';
 import {
-    HomeOutlined,
-    ContainerOutlined,
-    CalendarOutlined,
-    SettingOutlined,
     CaretRightOutlined,
     CodeSandboxOutlined,
+    ContainerOutlined,
+    HomeOutlined,
+    TeamOutlined,
 } from '@ant-design/icons';
-import { Divider, Collapse } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
-import { getDataAPI } from '../../../apis/fetchData';
+import { Collapse, Divider } from 'antd';
 import moment from 'moment';
+import { Link, useLocation } from 'react-router-dom';
+import logo from '../../../assets/images/logo.png';
 import { useStore } from '../../../hooks/useStore';
 const { Panel } = Collapse;
 
@@ -83,6 +80,25 @@ const SideBarLeft = () => {
                             }`}
                         >
                             Ql Sản phẩm
+                        </span>
+                    </div>
+                </Link>
+
+                <Link to="/user">
+                    <div className="flex items-center mb-[40px]">
+                        <TeamOutlined
+                            style={{
+                                fontSize: '18px',
+                                color: 'black',
+                                opacity: pathname.includes('user') ? 1 : 0.4,
+                            }}
+                        />
+                        <span
+                            className={`text-[15px] font-[500] ml-[16px] text-black ${
+                                pathname.includes('user') ? 'opacity-100' : 'opacity-40'
+                            }`}
+                        >
+                            Ql tài khoản
                         </span>
                     </div>
                 </Link>

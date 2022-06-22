@@ -87,6 +87,12 @@ const Login = () => {
                                                                     setLoading(true);
                                                                     const res = await postDataAPI('login', valueLogin);
                                                                     if (res.status === 200) {
+                                                                        if (res?.data?.user?.role)
+                                                                            return getNotifications(
+                                                                                'Bạn không có quyền truy cập',
+                                                                                'error'
+                                                                            );
+
                                                                         localStorage.setItem('firstLoginAdmin', true);
 
                                                                         getNotifications(res.data.msg, 'success');

@@ -14,6 +14,7 @@ import EditProduct from '../features/product/page/edit';
 import Promotion from '../features/promotion/page';
 import CreateExplore from '../features/promotion/page/create_explore';
 import EditExplore from '../features/promotion/page/edit_explore';
+import UserPage from '../features/user/page';
 
 const RouterList = () => {
     return (
@@ -40,6 +41,9 @@ const RouterList = () => {
                 <Route index element={<PostPage />} />
                 <Route path="/post/create" element={<CreatePost />} />
                 <Route path="/post/edit/:id" element={<EditPost />} />
+            </Route>
+            <Route path="/user">
+                <Route index element={<UserPage />} />
             </Route>
         </Routes>
     );

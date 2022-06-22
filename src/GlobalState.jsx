@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import { getDataAPI } from './apis/fetchData';
+import { getNotifications } from './utils/common';
 
 export const GlobalState = createContext();
 
@@ -19,6 +20,11 @@ export const DataProvider = ({ children }) => {
             const refreshToken = async () => {
                 const res = await getDataAPI('refresh_token');
                 if (res.status === 200) {
+                    if (!res?.data?.user?.role) {
+                        localStorage.removeItem('firstLoginAdmin');
+                        getNotifications('Bạn không có quyền truy cập', 'error');
+                        return;
+                    }
                     setToken(res.data.accesstoken);
                     setUser(res.data.user);
                 }
